@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT: El enemigo en casa - PAM Hotels</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+    
+    * {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      user-select: none;
+    }
+
+    /* Gradient matches presentation background */
+    .bg-gradient-pam {
+      background: linear-gradient(135deg, #1e5276 0%, #2b6a94 50%, #1a4361 100%);
+    }
+
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* Pulsing energy rings around bot */
+    .pulse-ring {
+      position: absolute;
+      border-radius: 50%;
+      animation: pulsate 2.2s infinite ease-out;
+      border: 1.5px solid rgba(93, 163, 213, 0.4);
+      pointer-events: none;
+    }
+
+    @keyframes pulsate {
+      0% { transform: scale(0.7); opacity: 0.8; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    /* Floating IoT Devices Orbiting */
+    .floating-node {
+      animation: floatNode 4s ease-in-out infinite;
+      transition: all 0.4s ease;
+    }
+
+    @keyframes floatNode {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    /* AI Speech Bubble */
+    .speech-bubble {
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    .speech-bubble.active {
+      opacity: 1;
+      transform: translateY(0px) scale(1);
+    }
+
+    /* PAM HOTELS EXACT IMAGOTIPO STYLING */
+    .pam-logo-container {
+      background-color: #ffffff;
+      padding: 12px 26px 10px 26px;
+      border-radius: 6px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Vectorized Sinusoidal Wave Mask over PAM text */
+    .pam-logo-wrapper {
+      position: relative;
+      display: inline-block;
+      line-height: 0.9;
+    }
+
+    .pam-logo-text {
+      font-weight: 900;
+      font-size: 32px;
+      color: #4A708B; /* Azul pizarra */
+      letter-spacing: -0.5px;
+      position: relative;
+    }
+
+    /* Negative space sine wave overlay */
+    .pam-logo-wave {
+      position: absolute;
+      top: 35%;
+      left: -5%;
+      width: 110%;
+      height: 12px;
+      pointer-events: none;
+    }
+
+    .pam-logo-sub {
+      font-family: 'Playfair Display', serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 7px;
+      color: #8E8E8E; /* Gris estipulado */
+      margin-top: 4px;
+      text-transform: uppercase;
+      text-indent: 7px; /* Align tracking properly */
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-white overflow-hidden h-screen w-screen flex flex-col justify-between">
+
+  <header class="w-full px-8 py-4 flex justify-between items-center z-20 absolute top-0 left-0 pointer-events-auto">
+    <div class="flex items-center space-x-3">
+      <span class="inline-flex items-center justify-center w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+      <span class="text-xs uppercase tracking-widest font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-full">
+        CIBERBOT AVATAR V3.0 ACTIVE
+      </span>
+    </div>
+
+    <!-- Presentation Navigation (2 Slides) -->
+    <div class="flex items-center space-x-2 bg-gray-900/90 backdrop-blur-md px-4 py-2 rounded-full border border-gray-800 shadow-xl">
+      <button id="btnPrev" class="text-gray-400 hover:text-white px-2 py-1 transition-colors"><i class="fas fa-chevron-left"></i></button>
+      <span id="slideCounter" class="text-xs font-bold text-sky-400 tracking-wider px-3">SLIDE 01 / 02</span>
+      <button id="btnNext" class="text-gray-400 hover:text-white px-2 py-1 transition-colors"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </header>
+
+  <main class="w-full h-full flex flex-col md:flex-row relative pt-12">
+
+    <!-- LEFT PANEL: Animated Ciberbot Playground -->
+    <section class="w-full md:w-1/2 h-full relative flex flex-col items-center justify-center bg-radial from-slate-900 via-gray-950 to-black overflow-hidden border-r border-gray-800/50">
+      
+      <!-- Tech Grid Pattern -->
+      <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#5da3d5 1px, transparent 1px); background-size: 26px 26px;"></div>
+      
+      <!-- 5 Floating Friendly IoT Device Nodes Orbiting Ciberbot -->
+      <div class="absolute inset-0 pointer-events-none z-10">
+        <div class="floating-node absolute top-[16%] left-[8%] glass-panel px-3 py-2 rounded-2xl flex items-center space-x-2.5 border-cyan-500/30 text-cyan-400 shadow-lg shadow-cyan-500/10">
+          <i class="fas fa-video text-sm"></i>
+          <span class="text-xs font-mono text-gray-200">Cámara IoT</span>
+        </div>
+        
+        <div class="floating-node absolute top-[18%] right-[8%] glass-panel px-3 py-2 rounded-2xl flex items-center space-x-2.5 border-emerald-500/30 text-emerald-400 shadow-lg shadow-emerald-500/10" style="animation-delay: -1.2s;">
+          <i class="fas fa-wifi text-sm"></i>
+          <span class="text-xs font-mono text-gray-200">Red Router</span>
+        </div>
+
+        <div class="floating-node absolute bottom-[18%] left-[8%] glass-panel px-3 py-2 rounded-2xl flex items-center space-x-2.5 border-amber-500/30 text-amber-400 shadow-lg shadow-amber-500/10" style="animation-delay: -2.4s;">
+          <i class="fas fa-lock text-sm"></i>
+          <span class="text-xs font-mono text-gray-200">Chapa Inteligente</span>
+        </div>
+
+        <div class="floating-node absolute bottom-[22%] right-[8%] glass-panel px-3 py-2 rounded-2xl flex items-center space-x-2.5 border-sky-500/30 text-sky-400 shadow-lg shadow-sky-500/10" style="animation-delay: -1.6s;">
+          <i class="fas fa-temperature-half text-sm"></i>
+          <span class="text-xs font-mono text-gray-200">Termostato Smart</span>
+        </div>
+
+        <div class="floating-node absolute top-[48%] right-[4%] glass-panel px-3 py-2 rounded-2xl flex items-center space-x-2.5 border-purple-500/30 text-purple-400 shadow-lg shadow-purple-500/10" style="animation-delay: -3.2s;">
+          <i class="fas fa-lightbulb text-sm"></i>
+          <span class="text-xs font-mono text-gray-200">Luz Inteligente</span>
+        </div>
+      </div>
+
+      <!-- AI Speech Bubble -->
+      <div id="speechBubble" class="speech-bubble absolute top-[10%] z-30 bg-slate-900/90 text-sky-200 border border-sky-500/40 px-5 py-2.5 rounded-2xl shadow-2xl backdrop-blur-md max-w-xs text-center font-medium text-xs">
+        <i class="fas fa-robot text-sky-400 mr-1.5"></i>
+        <span id="speechText">¡Hola! Soy Ciberbot en acción.</span>
+      </div>
+
+      <!-- CANVAS CIBERBOT -->
+      <div class="relative w-[480px] h-[520px] sm:w-[560px] sm:h-[600px] flex items-center justify-center overflow-visible">
+        <div class="pulse-ring w-80 h-80"></div>
+        <div class="pulse-ring w-[420px] h-[420px]" style="animation-delay: 0.8s;"></div>
+        
+        <canvas id="botCanvas" width="600" height="650" class="relative z-20 drop-shadow-[0_20px_35px_rgba(43,106,148,0.4)]"></canvas>
+      </div>
+
+      <!-- Enhanced Xbox Avatar Action Buttons -->
+      <div class="z-20 mb-6 flex items-center space-x-3 bg-gray-900/80 p-2.5 rounded-full border border-gray-800 backdrop-blur-md shadow-2xl">
+        <button id="btnWave" title="Saludar" class="w-11 h-11 rounded-full bg-sky-600/30 hover:bg-sky-500/50 border border-sky-400/50 text-sky-300 hover:text-white flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 shadow-lg">
+          <i class="fas fa-hand-wave text-base"></i>
+        </button>
+        <button id="btnIdea" title="¡Tengo una Idea! (Foco)" class="w-11 h-11 rounded-full bg-amber-600/30 hover:bg-amber-500/50 border border-amber-400/50 text-amber-300 hover:text-white flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 shadow-lg">
+          <i class="fas fa-lightbulb text-base"></i>
+        </button>
+        <button id="btnTeleport" title="Teletransportar / Aparecer" class="w-11 h-11 rounded-full bg-purple-600/30 hover:bg-purple-500/50 border border-purple-400/50 text-purple-300 hover:text-white flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 shadow-lg">
+          <i class="fas fa-wand-magic-sparkles text-base"></i>
+        </button>
+        <button id="btnWalk" title="Caminar / Desplazarse" class="w-11 h-11 rounded-full bg-blue-600/30 hover:bg-blue-500/50 border border-blue-400/50 text-blue-300 hover:text-white flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 shadow-lg">
+          <i class="fas fa-person-walking text-base"></i>
+        </button>
+        <button id="btnAlert" title="Modo Alerta" class="w-11 h-11 rounded-full bg-red-600/30 hover:bg-red-500/50 border border-red-400/50 text-red-300 hover:text-white flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 shadow-lg">
+          <i class="fas fa-triangle-exclamation text-base"></i>
+        </button>
+        <button id="btnNormal" title="Modo Amigable" class="w-11 h-11 rounded-full bg-emerald-600/30 hover:bg-emerald-500/50 border border-emerald-400/50 text-emerald-300 hover:text-white flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 shadow-lg">
+          <i class="fas fa-face-smile text-base"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: Slide Content -->
+    <section class="w-full md:w-1/2 h-full bg-gradient-pam p-8 sm:p-14 flex flex-col justify-between relative shadow-2xl overflow-y-auto">
+      
+      <!-- TOP BRANDING: REAL VECTORIZED PAM HOTELS LOGO -->
+      <div class="flex justify-between items-start">
+        <div class="pam-logo-container">
+          <div class="pam-logo-wrapper">
+            <span class="pam-logo-text">PAM</span>
+            <!-- SVG Sinusoidal Wave cutting across PAM text in white negative space -->
+            <svg class="pam-logo-wave" viewBox="0 0 100 20" preserveAspectRatio="none">
+              <path d="M0,10 Q25,-5 50,10 T100,10" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="pam-logo-sub">HOTELS</div>
+        </div>
+
+        <div class="text-right">
+          <span class="text-xs uppercase font-bold tracking-widest text-sky-200/80 block">CONFERENCIA 2026</span>
+        </div>
+      </div>
+
+      <div id="slideContent" class="my-auto py-6"></div>
+
+      <div id="slideActions" class="mt-auto">
+        <div id="cardScan" class="glass-panel p-4 rounded-xl hover:bg-white/15 transition-all cursor-pointer group">
+          <div class="flex items-center space-x-3">
+            <div class="p-3 bg-emerald-500/20 rounded-lg group-hover:bg-emerald-400 group-hover:text-slate-900 transition-colors">
+              <i class="fas fa-radar text-lg text-emerald-300 group-hover:text-slate-900"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Escáner de Red</h4>
+              <p class="text-xs text-emerald-200/80">Auditoría Ciberbot activa</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const canvas = document.getElementById('botCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    let time = 0;
+    let botState = 'normal';
+    
+    let posX = 0;
+    let targetX = 0;
+    let posY = 0; 
+    let targetY = 0; 
+    let opacity = 1;
+    let scaleY = 1;
+    let legCycle = 0;
+    
+    let bulbOpacity = 1;
+    let bulbY = 0;
+    let bulbGlow = 12;
+
+    let eyeTargetX = 0;
+    let eyeTargetY = 0;
+    let currentEyeX = 0;
+    let currentEyeY = 0;
+    let blinkProgress = 0;
+    let isBlinking = false;
+
+    setInterval(() => {
+      eyeTargetX = (Math.random() - 0.5) * 45;
+      eyeTargetY = (Math.random() - 0.5) * 30;
+    }, 900);
+
+    setInterval(() => {
+      if (botState !== 'normal') return;
+      
+      const rand = Math.random();
+      if (rand < 0.35) {
+        targetX = (Math.random() - 0.5) * 220;
+      } else if (rand < 0.60) {
+        performJump();
+      } else if (rand < 0.80) {
+        triggerTeleport();
+      } else {
+        botState = 'wave';
+        speak("¡Analizando entorno IoT!");
+        setTimeout(() => { if(botState === 'wave') botState = 'normal'; }, 2200);
+      }
+    }, 3800);
+
+    setInterval(() => {
+      triggerBlink();
+    }, 2400);
+
+    function triggerBlink() {
+      if (isBlinking) return;
+      isBlinking = true;
+      let duration = 110;
+      let start = performance.now();
+      
+      function animateBlink(now) {
+        let elapsed = now - start;
+        if (elapsed < duration) {
+          blinkProgress = Math.sin((elapsed / duration) * Math.PI);
+          requestAnimationFrame(animateBlink);
+        } else {
+          blinkProgress = 0;
+          isBlinking = false;
+        }
+      }
+      requestAnimationFrame(animateBlink);
+    }
+
+    function performJump() {
+      let start = performance.now();
+      let duration = 450;
+      
+      function animateJump(now) {
+        let elapsed = now - start;
+        if (elapsed < duration) {
+          let progress = elapsed / duration;
+          posY = -Math.sin(progress * Math.PI) * 45;
+          scaleY = 1 + Math.sin(progress * Math.PI) * 0.15;
+          requestAnimationFrame(animateJump);
+        } else {
+          posY = 0;
+          scaleY = 1;
+        }
+      }
+      requestAnimationFrame(animateJump);
+    }
+
+    function triggerIdea() {
+      botState = 'idea';
+      speak("💡 ¡Ajá! Detecté una optimización importante.");
+      let start = performance.now();
+      let duration = 2400;
+
+      function animateIdea(now) {
+        let elapsed = now - start;
+        if (elapsed < duration) {
+          bulbY = -Math.sin(Math.min(elapsed / 250, 1) * (Math.PI / 2)) * 30;
+          bulbGlow = 15 + Math.sin(elapsed * 0.015) * 12;
+          requestAnimationFrame(animateIdea);
+        } else {
+          bulbY = 0;
+          botState = 'normal';
+        }
+      }
+      requestAnimationFrame(animateIdea);
+    }
+
+    function triggerTeleport() {
+      botState = 'teleport';
+      
+      let start = performance.now();
+      let fadeOutDuration = 250;
+
+      function fadeOut(now) {
+        let elapsed = now - start;
+        if (elapsed < fadeOutDuration) {
+          opacity = 1 - (elapsed / fadeOutDuration);
+          posY = (elapsed / fadeOutDuration) * 70;
+          requestAnimationFrame(fadeOut);
+        } else {
+          opacity = 0;
+          targetX = (Math.random() - 0.5) * 240;
+          posX = targetX;
+          posY = -70;
+          
+          setTimeout(() => {
+            let startIn = performance.now();
+            let fadeInDuration = 250;
+
+            function fadeIn(nowIn) {
+              let elapsedIn = nowIn - startIn;
+              if (elapsedIn < fadeInDuration) {
+                opacity = elapsedIn / fadeInDuration;
+                posY = -70 + (elapsedIn / fadeInDuration) * 70;
+                requestAnimationFrame(fadeIn);
+              } else {
+                opacity = 1;
+                posY = 0;
+                botState = 'normal';
+                performJump();
+              }
+            }
+            requestAnimationFrame(fadeIn);
+          }, 150);
+        }
+      }
+      requestAnimationFrame(fadeOut);
+    }
+
+    function drawBot() {
+      time += 0.05;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let dx = targetX - posX;
+      if (Math.abs(dx) > 1) {
+        posX += dx * 0.12;
+        legCycle += 0.35;
+      } else {
+        posX = targetX;
+        legCycle = 0;
+      }
+
+      const baseCenterX = canvas.width / 2;
+      const baseCenterY = canvas.height / 2 + 15;
+      
+      const centerX = baseCenterX + posX;
+      const floatY = Math.sin(time * 2.2) * 8;
+      const headTilt = Math.sin(time * 1.1) * 0.06; 
+      const centerY = baseCenterY + posY + floatY;
+
+      currentEyeX += (eyeTargetX - currentEyeX) * 0.18;
+      currentEyeY += (eyeTargetY - currentEyeY) * 0.18;
+
+      let primaryColor = '#2b6a94';
+      let accentGlow = '#5da3d5';
+      let eyeColor = '#ffffff';
+
+      if (botState === 'alert') {
+        primaryColor = '#991b1b';
+        accentGlow = '#f87171';
+        eyeColor = '#fee2e2';
+      } else if (botState === 'idea') {
+        accentGlow = '#fbbf24';
+      }
+
+      ctx.save();
+      ctx.globalAlpha = opacity;
+      ctx.translate(centerX, centerY);
+      ctx.scale(1, scaleY);
+      ctx.rotate(headTilt);
+      ctx.translate(-centerX, -centerY);
+
+      // FOQUITO
+      ctx.save();
+      const bulbX = centerX;
+      const bulbCenterY = centerY - 210 + bulbY;
+      const currentGlow = bulbGlow + Math.sin(time * 3) * 6;
+
+      ctx.beginPath();
+      ctx.arc(bulbX, bulbCenterY, 32, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(251, 191, 36, 0.4)';
+      ctx.shadowColor = '#f59e0b';
+      ctx.shadowBlur = currentGlow + 15;
+      ctx.fill();
+
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 3;
+      for (let i = 0; i < 8; i++) {
+        let angle = (i * Math.PI) / 4;
+        let rx1 = bulbX + Math.cos(angle) * 30;
+        let ry1 = bulbCenterY + Math.sin(angle) * 30;
+        let rx2 = bulbX + Math.cos(angle) * 42;
+        let ry2 = bulbCenterY + Math.sin(angle) * 42;
+        ctx.beginPath();
+        ctx.moveTo(rx1, ry1);
+        ctx.lineTo(rx2, ry2);
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      ctx.arc(bulbX, bulbCenterY - 4, 20, 0, Math.PI * 2);
+      ctx.fillStyle = '#f59e0b';
+      ctx.fill();
+      ctx.strokeStyle = '#fef08a';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.beginPath();
+      ctx.roundRect(bulbX - 8, bulbCenterY + 14, 16, 12, 3);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(bulbX - 6, bulbCenterY + 5);
+      ctx.lineTo(bulbX, bulbCenterY - 8);
+      ctx.lineTo(bulbX + 6, bulbCenterY + 5);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.restore();
+
+      // Antenna
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY - 130);
+      ctx.lineTo(centerX, centerY - 180);
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 7;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY - 186, 13, 0, Math.PI * 2);
+      ctx.fillStyle = accentGlow;
+      ctx.shadowColor = accentGlow;
+      ctx.shadowBlur = 18 + Math.sin(time * 5) * 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Side Ear Bolts
+      ctx.fillStyle = '#cbd5e1';
+      ctx.beginPath();
+      ctx.roundRect(centerX - 132, centerY - 70, 20, 42, 9);
+      ctx.roundRect(centerX + 112, centerY - 70, 20, 42, 9);
+      ctx.fill();
+
+      // Head Outer Body
+      ctx.fillStyle = primaryColor;
+      ctx.beginPath();
+      ctx.roundRect(centerX - 112, centerY - 135, 224, 162, 30);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 4.5;
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+      ctx.beginPath();
+      ctx.roundRect(centerX - 100, centerY - 124, 200, 24, 12);
+      ctx.fill();
+
+      // Face Screen Frame
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.roundRect(centerX - 90, centerY - 112, 180, 122, 22);
+      ctx.fill();
+      ctx.strokeStyle = accentGlow;
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+
+      // Eyes
+      const leftEyeX = centerX - 40 + currentEyeX;
+      const rightEyeX = centerX + 40 + currentEyeX;
+      const eyeY = centerY - 55 + currentEyeY;
+      const eyeHeight = 25 * (1 - blinkProgress);
+
+      if (eyeHeight > 2) {
+        ctx.fillStyle = eyeColor;
+        ctx.beginPath();
+        ctx.ellipse(leftEyeX, eyeY, 21, eyeHeight, 0, 0, Math.PI * 2);
+        ctx.ellipse(rightEyeX, eyeY, 21, eyeHeight, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(leftEyeX + currentEyeX * 0.25, eyeY + currentEyeY * 0.25, 8.5, 0, Math.PI * 2);
+        ctx.arc(rightEyeX + currentEyeX * 0.25, eyeY + currentEyeY * 0.25, 8.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(leftEyeX - 6, eyeY - 6, 4.5, 0, Math.PI * 2);
+        ctx.arc(rightEyeX - 6, eyeY - 6, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.strokeStyle = eyeColor;
+        ctx.lineWidth = 4.5;
+        ctx.beginPath();
+        ctx.moveTo(leftEyeX - 16, eyeY);
+        ctx.lineTo(leftEyeX + 16, eyeY);
+        ctx.moveTo(rightEyeX - 16, eyeY);
+        ctx.lineTo(rightEyeX + 16, eyeY);
+        ctx.stroke();
+      }
+
+      // Mouth
+      ctx.beginPath();
+      ctx.strokeStyle = accentGlow;
+      ctx.lineWidth = 4.5;
+      ctx.lineCap = 'round';
+
+      if (botState === 'alert') {
+        ctx.arc(centerX + currentEyeX * 0.3, centerY - 12, 10, 0, Math.PI * 2);
+        ctx.stroke();
+      } else if (botState === 'wave' || botState === 'idea') {
+        ctx.arc(centerX + currentEyeX * 0.3, centerY - 20, 18, 0.12 * Math.PI, 0.88 * Math.PI);
+        ctx.stroke();
+      } else {
+        ctx.arc(centerX + currentEyeX * 0.3, centerY - 22, 15, 0.2 * Math.PI, 0.8 * Math.PI);
+        ctx.stroke();
+      }
+
+      // -----------------------------------------------------------
+      // BODY / T-SHIRT WITH ACCURATE REAL VECTORIZED PAM LOGO
+      // -----------------------------------------------------------
+      const neckY = centerY + 28;
+      ctx.fillStyle = '#f8fafc';
+      ctx.beginPath();
+      ctx.moveTo(centerX - 48, neckY);
+      ctx.lineTo(centerX + 48, neckY);
+      ctx.lineTo(centerX + 128, neckY + 135);
+      ctx.lineTo(centerX - 128, neckY + 135);
+      ctx.closePath();
+      ctx.fill();
+
+      // Collar
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 5.5;
+      ctx.beginPath();
+      ctx.arc(centerX, neckY, 32, 0, Math.PI);
+      ctx.stroke();
+
+      // 1. "PAM" Text: Azul pizarra (#4A708B) Extra Bold Sans-Serif
+      ctx.fillStyle = '#4A708B';
+      ctx.font = '900 24px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('PAM', centerX, neckY + 58);
+
+      // 2. Sinusoidal Wave cutting across PAM text in white (Espacio Negativo)
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 3.5;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      const waveY = neckY + 48;
+      ctx.moveTo(centerX - 30, waveY);
+      ctx.quadraticCurveTo(centerX - 15, waveY - 8, centerX, waveY);
+      ctx.quadraticCurveTo(centerX + 15, waveY + 8, centerX + 30, waveY);
+      ctx.stroke();
+
+      // 3. "HOTELS" Subtext: Thin Serif Gris (#8E8E8E) con amplio espaciado
+      ctx.fillStyle = '#8E8E8E';
+      ctx.font = '400 9px "Playfair Display", serif';
+      ctx.letterSpacing = '5px';
+      ctx.fillText('HOTELS', centerX + 2, neckY + 74);
+      ctx.letterSpacing = '0px'; // Reset canvas spacing
+
+      // Arms & Legs
+      const legOffset = Math.sin(legCycle) * 12;
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath();
+      ctx.roundRect(centerX - 45 + legOffset, neckY + 130, 28, 30, 10);
+      ctx.roundRect(centerX + 17 - legOffset, neckY + 130, 28, 30, 10);
+      ctx.fill();
+
+      if (botState === 'wave') {
+        const waveAngle = Math.sin(time * 12) * 0.45;
+        ctx.save();
+        ctx.translate(centerX - 108, neckY + 34);
+        ctx.rotate(-0.9 + waveAngle);
+        ctx.fillStyle = primaryColor;
+        ctx.beginPath();
+        ctx.roundRect(-16, 0, 32, 85, 16);
+        ctx.fill();
+        ctx.fillStyle = '#cbd5e1';
+        ctx.beginPath();
+        ctx.arc(0, 90, 17, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.fillStyle = primaryColor;
+        ctx.beginPath();
+        ctx.roundRect(centerX + 104, neckY + 22, 30, 85, 15);
+        ctx.fill();
+      } else if (botState === 'idea') {
+        ctx.fillStyle = primaryColor;
+        ctx.beginPath();
+        ctx.roundRect(centerX - 132, neckY + 22, 30, 85, 15);
+        ctx.fill();
+
+        ctx.save();
+        ctx.translate(centerX + 110, neckY + 30);
+        ctx.rotate(-2.2);
+        ctx.fillStyle = primaryColor;
+        ctx.beginPath();
+        ctx.roundRect(-15, 0, 30, 80, 15);
+        ctx.fill();
+        ctx.restore();
+      } else {
+        const armSway = Math.sin(time * 3) * 6 + (legOffset * 0.5);
+        ctx.fillStyle = primaryColor;
+        ctx.beginPath();
+        ctx.roundRect(centerX - 134, neckY + 22 + armSway, 30, 85, 15);
+        ctx.roundRect(centerX + 104, neckY + 22 - armSway, 30, 85, 15);
+        ctx.fill();
+      }
+
+      ctx.restore();
+      requestAnimationFrame(drawBot);
+    }
+
+    drawBot();
+
+    const speechBubble = document.getElementById('speechBubble');
+    const speechText = document.getElementById('speechText');
+
+    function speak(text, duration = 3000) {
+      speechText.innerText = text;
+      speechBubble.classList.add('active');
+      setTimeout(() => {
+        speechBubble.classList.remove('active');
+      }, duration);
+    }
+
+    // Button Listeners
+    document.getElementById('btnWave').addEventListener('click', () => {
+      botState = 'wave';
+      speak("¡Hola a todos! Bienvenidos a la presentación PAM Hotels. 👋");
+      performJump();
+      setTimeout(() => { if(botState === 'wave') botState = 'normal'; }, 2500);
+    });
+
+    document.getElementById('btnIdea').addEventListener('click', () => {
+      triggerIdea();
+    });
+
+    document.getElementById('btnTeleport').addEventListener('click', () => {
+      triggerTeleport();
+    });
+
+    document.getElementById('btnWalk').addEventListener('click', () => {
+      botState = 'walk';
+      targetX = (Math.random() - 0.5) * 260;
+      speak("🚶‍♂️ Explorando el escenario de lado a lado...");
+      setTimeout(() => { botState = 'normal'; }, 2000);
+    });
+
+    document.getElementById('btnAlert').addEventListener('click', () => {
+      botState = 'alert';
+      speak("⚠️ Alerta: Dispositivo IoT transmitiendo en puerto no seguro.");
+      setTimeout(() => { if(botState === 'alert') botState = 'normal'; }, 3000);
+    });
+
+    document.getElementById('btnNormal').addEventListener('click', () => {
+      botState = 'normal';
+      targetX = 0;
+      speak("Sistemas optimizados y amigables. Ciberbot listo.");
+    });
+
+    // Presentation Slides
+    const slides = [
+      {
+        id: 1,
+        title: "IoT: El enemigo <br><span class='text-sky-300 italic font-light'>en casa</span>",
+        author: "Rogelio Domínguez.",
+        speech: "¡Bienvenidos! Les presentaré cómo la tecnología IoT impacta en la seguridad hotelera.",
+        contentHTML: `
+          <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-none mb-6 drop-shadow-md">
+            IoT: El enemigo <br><span class="text-sky-300 italic font-light">en casa</span>
+          </h1>
+          <div class="w-20 h-1.5 bg-sky-400 rounded-full mb-8"></div>
+          <p class="text-xl sm:text-2xl font-medium text-sky-100/90 tracking-wide">
+            Rogelio Domínguez.
+          </p>
+        `
+      },
+      {
+        id: 2,
+        title: "Escáner de Red IoT",
+        author: "Auditoría en tiempo real",
+        speech: "Analizando la red local de PAM Hotels para detectar vulnerabilidades en nodos conectados.",
+        contentHTML: `
+          <div class="inline-flex items-center space-x-2 bg-emerald-400/20 text-emerald-300 px-3 py-1 rounded-md text-xs font-semibold mb-4 border border-emerald-300/30">
+            <i class="fas fa-radar animate-spin"></i>
+            <span>Auditoría Activa de Dispositivos</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
+            Escáner de Red <br><span class="text-emerald-300 italic font-light">PAM IoT</span>
+          </h2>
+          <div class="w-20 h-1.5 bg-emerald-400 rounded-full mb-6"></div>
+          
+          <div class="space-y-3 max-w-lg mb-4">
+            <div class="bg-black/30 backdrop-blur-md p-3.5 rounded-xl border border-white/10 flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <i class="fas fa-video text-cyan-400"></i>
+                <span class="text-sm font-medium">Cámara Habitación 302</span>
+              </div>
+              <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Cifrado OK</span>
+            </div>
+
+            <div class="bg-black/30 backdrop-blur-md p-3.5 rounded-xl border border-white/10 flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <i class="fas fa-lock text-amber-400"></i>
+                <span class="text-sm font-medium">Chapa Inteligente Main</span>
+              </div>
+              <span class="text-xs px-2.5 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/40">Puerto 23 Expuesto</span>
+            </div>
+
+            <div class="bg-black/30 backdrop-blur-md p-3.5 rounded-xl border border-white/10 flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <i class="fas fa-temperature-half text-sky-400"></i>
+                <span class="text-sm font-medium">Termostato HVAC</span>
+              </div>
+              <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Seguro</span>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    let currentSlide = 0;
+    const slideContent = document.getElementById('slideContent');
+    const slideCounter = document.getElementById('slideCounter');
+
+    function updateSlide() {
+      const slide = slides[currentSlide];
+      slideCounter.innerText = `SLIDE 0${currentSlide + 1} / 0${slides.length}`;
+      slideContent.innerHTML = slide.contentHTML;
+      speak(slide.speech);
+    }
+
+    updateSlide();
+
+    document.getElementById('btnNext').addEventListener('click', () => {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    });
+
+    document.getElementById('btnPrev').addEventListener('click', () => {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    });
+
+    document.getElementById('cardScan').addEventListener('click', () => {
+      currentSlide = 1;
+      updateSlide();
+      triggerIdea();
+      setTimeout(() => {
+        botState = 'alert';
+        speak("Iniciando escaneo completo de la infraestructura IoT...");
+        setTimeout(() => { botState = 'normal'; }, 2800);
+      }, 1000);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        if (currentSlide < slides.length - 1) {
+          currentSlide++;
+          updateSlide();
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (currentSlide > 0) {
+          currentSlide--;
+          updateSlide();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
